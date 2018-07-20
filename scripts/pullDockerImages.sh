@@ -38,7 +38,7 @@ echo "---------> STABLE_VERSION:" $STABLE_VERSION
 cd $GOPATH/src/github.com/hyperledger/fabric
 
 dockerTag() {
-  for IMAGES in peer orderer ccenv tools ca ca-tools ca-peer ca-orderer ca-fvt; do
+  for IMAGES in peer; do
     echo "Images: $IMAGES"
     echo
     docker pull $NEXUS_URL/$ORG_NAME-$IMAGES:$STABLE_TAG
