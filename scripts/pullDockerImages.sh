@@ -68,7 +68,7 @@ echo "======== PULL FABRIC BINARIES ========"
 #COMMIT=$(echo $RELEASE_TAG | awk -F - '{ print $4 }' | cut -d "<" -f1)
 # TODO# Will remove this later after fix the network glitch on the nexus maven-metadata.xml
 #: ${RELEASE_COMMIT:=29a7d95}
-#echo "------------> RELEASE_COMMIT:" $RELEASE_COMMIT
+echo "------------> RELEASE_COMMIT:" $RELEASE_COMMIT
 OS_VER=$(uname -s|tr '[:upper:]' '[:lower:]')
 echo
 rm -rf .build && mkdir -p .build && cd .build
