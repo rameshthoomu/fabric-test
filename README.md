@@ -1,6 +1,6 @@
 ### Welcome to fabric-test
 -------
-
+TEST
 [![Build Status](https://jenkins.hyperledger.org/buildStatus/icon?job=fabric-test-merge-x86_64)](https://jenkins.hyperledger.org/view/fabric-test/job/fabric-test-merge-x86_64/)
 
 You are in the right place if you are interested in testing the Hyperledger Fabric and related repositories.
