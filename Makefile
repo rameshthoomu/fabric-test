@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # -------------------------------------------------------------
 # This makefile defines the following targets
-#
+# Test
 #   - ca       - clones the fabric-ca repository.
 #   - ci-smoke - update submodules, clone fabric & fabric-ca, build docker images
 #                and executes smoke tests.
