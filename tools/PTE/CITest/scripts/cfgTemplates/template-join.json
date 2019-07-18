@@ -1,0 +1,11 @@
+{
+    "transType": "Channel",
+    "TLS": "_TLS_",
+    "channelOpt": {
+        "name": "_CHANNELNAME_",
+        "action":  "join",
+        "orgName": [
+        ]
+    },
+    "ConnProfilePath": "_CPDIRECTORY_"
+}

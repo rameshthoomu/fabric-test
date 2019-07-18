@@ -1,0 +1,43 @@
+*.pyc
+.*.sw*
+*.log
+node-cli/node-cli
+*.cov
+/bin
+.idea
+*.iml
+.DS_Store
+tags
+.tags
+.vagrant/
+# Emacs backup files
+*~
+*#
+.#*
+# Makefile dummy artifacts
+.*-dummy
+# go-carpet output files
+go-carpet-coverage*
+# make node-sdk copied files
+sdk/node/lib/protos/*
+# Test result xml files
+report.xml
+results.xml
+TESTS*.xml
+.settings
+.project
+.gradle
+build/
+bin/
+*.tx
+*.block
+# vscode settings
+.vscode
+#node_modules
+feature/node_modules/*
+tools/PTE/node_modules
+tools/operator/configFiles
+tools/operator/launcher/ytt
+tools/operator/templates/input.yaml
+tools/PTE/CITest/k8s_testsuite/wrapper_script/results_systest_pte.xml
+tools/PTE/runPTE/
