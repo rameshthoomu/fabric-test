@@ -157,7 +157,8 @@ echo "***      CHANPREFIX: $CHANPREFIX                         "
 echo "***      CHANNEL TX PATH: $CHANNELTXPATH                 "
 echo "***      CHANNEL length: ${#CHANNEL[@]}                  "
 echo "***      CHANNEL: ${CHANNEL[@]}                          "
-echo "***      CHANNELID: _ch${NCHAN}                          "
+echo "***      CHANNELID: ${NCHAN}                             "
+echo "***      CHAN0: ${CHAN0}                                 "
 echo "***                                                      "
 echo "***      ORGS set name: $setOrgName                      "
 echo "***      ORGS set num: $setOrgNum                        "
@@ -207,10 +208,9 @@ TEMPLATEDIR=$PTEDIR/CITest/scripts/cfgTemplates
 runDir=$PTEDIR/runPTE
 
 TLS="serverauth"
-export CHANNEL="defaultchannel"       # channel name
+CHANNEL="defaultchannel"       # channel name
 CHANNELTXPATH="github.com/hyperledger/fabric-test/fabric/internal/cryptogen/ordererOrganizations"    # default channel path
 CHANNELTX=""
-export CHANNELID=""
 ChanProc="NO"
 CCProc="NO"
 PrimeProc="NO"
@@ -225,8 +225,9 @@ ORGPREFIX="org"                # default org name
 setChanName="no"
 setChanNum="no"
 CHANPREFIX="defaultchannel"    # default channel name
-CHAN0=1                        # default first channel
+CHAN0=0                        # default first channel
 NCHAN=0
+CHANNELID="_ch0"
 NORG=0
 TXMODE="Constant"
 NPROC=1
@@ -269,10 +270,10 @@ getCCPath() {
     elif [ $cc == "sample_js" ]; then
         CCPath=$CCPathsamplejs
         LANGUAGE="node"
-    elif [ $cc == "samplejava" ]; then
+    elif [ $cc == "sample_java" ]; then
         CCPath=$CCPathsamplejava
         LANGUAGE="java"
-    elif [ $cc == "marbles02" ]; then
+    elif [ $cc == "marbles02_go" ]; then
         CCPath=$CCPathmarbles02
         MDPath=$MatadataPath
         LANGUAGE="golang"
@@ -320,7 +321,8 @@ InsertOrgs() {
 # $1: config file name
 # $2: connection profile path
 # $3: channel
-# $4: chaincode (optional)
+# $4: channelID
+# $5: chaincode (optional)
 PreCFGProc() {
 
     cfgName=$1
@@ -392,42 +394,40 @@ PreTXProc() {
 # channel process: create and join
 ChannelProc() {
     # loop on channel list
-    for ((i=$CHAN0; i<=${#CHANNEL[@]}; i++)); do
-        echo "CHANNEL1" ${CHANNEL[$i]}
+      echo "CHAN0" $CHAN0
+      echo "Channel list" ${CHANNEL[@]}
+    for ((j=0; j<${#CHANNEL[@]}; j++)) 
+       do
+        echo "CHANNEL"$j ${CHANNEL[$j]}
         # loop on network list
         for cppath in "${CPDIR[@]}"; do
-            cname=${CHANNEL[$i]}
-            cid=${CHANNELID[$i]}
-            
+            channelName=${CHANNEL[$j]}
+            channelID=${CHANNELID[$j]}
             cd $runDir
             echo "process cc $cppath channel $chan"
-            echo "CHANNELID" $cid
+            echo "CHANNELID" $channelID
 
-            cfgCREATE=create-$cname".json"
+            cfgCREATE=create-$channelName".json"
             cp $TEMPLATEDIR/template-create.json $cfgCREATE
 
-            PreCFGProc $cfgCREATE $cppath $cname $cid
+            PreCFGProc $cfgCREATE $cppath $channelName $channelID
 
             # create channel
-            runCaseCreate=runCases-create-$cname".txt"
+            runCaseCreate=runCases-create-$channelName".txt"
             tmp=$runDir/$cfgCREATE
             echo "sdk=node $tmp" >> $runCaseCreate
-
             cd $PTEDIR
             echo "create channel on $cppath"
             ./pte_driver.sh $runDir/$runCaseCreate
-
-            sleep 60
+            sleep 10
             # join channel
             cd $runDir
 
-            cfgJOIN=join-$cname".json"
+            cfgJOIN=join-$channelName".json"
             cp $TEMPLATEDIR/template-join.json $cfgJOIN
-            echo "CHANNELNAME" $cname
 
-            PreCFGProc $cfgJOIN $cppath $cname $cid
-            echo "CHANNELID" $cid
-            runCaseJoin=runCases-join-$cname".txt"
+            PreCFGProc $cfgJOIN $cppath $channelName $channelID
+            runCaseJoin=runCases-join-$channelName".txt"
             tmp=$runDir/$cfgJOIN
             echo "sdk=node $tmp" >> $runCaseJoin
 
@@ -436,7 +436,6 @@ ChannelProc() {
             ./pte_driver.sh $runDir/$runCaseJoin
 
             cd $runDir
-
         done     # end loop on network list
     done         # end loop on channel list
 }
@@ -450,20 +449,20 @@ ChaincodeProc() {
         # loop on network list
         for cppath in "${CPDIR[@]}"; do
             # loop on channel list
-            for ((i=$CHAN0; i<=${#CHANNEL[@]}; i++)); do
-            cname=${CHANNEL[$i]}
-            cid=${CHANNELID[$i]}
+            for ((j=0; j<${#CHANNEL[@]}; j++)); do
+            channelName=${CHANNEL[$j]}
+            channelID=${CHANNELID[$j]}
                 cd $runDir
                 echo "[$0] process cc $cppath"
                 echo "[$0] CCPath $CCPath"
             echo "chaincode" $chaincode
 
-                fname=$cname"-"$chaincode
+                fname=$channelName"-"$chaincode
            echo "fname" $fname
                 cfgINSTALL=install-$fname".json"
                 cp $TEMPLATEDIR/template-install.json $cfgINSTALL
 
-                PreCFGProc $cfgINSTALL $cppath $cname $cid $chaincode
+                PreCFGProc $cfgINSTALL $cppath $channelName $channelID $chaincode
 
                 # install chaincode
                 runCaseinstall=runCases-install-$fname".txt"
@@ -475,7 +474,7 @@ ChaincodeProc() {
                 cfgINSTAN=instantiate-$fname".json"
                 cp $TEMPLATEDIR/template-instantiate.json $cfgINSTAN
 
-                PreCFGProc $cfgINSTAN $cppath $cname $cid $chaincode
+                PreCFGProc $cfgINSTAN $cppath $channelName $channelID $chaincode
 
                 runCaseinstantiate=runCases-instantiate-$fname".txt"
                 tmp=$runDir/$cfgINSTAN
@@ -510,12 +509,11 @@ TransactionProc() {
         # loop on network list
         for cppath in "${CPDIR[@]}"; do
             # loop on channel list
-            for ((i=$CHAN0; i<=${#CHANNEL[@]}; i++)); do
-            cname=${CHANNEL[$i]}
-            cid=${CHANNELID[$i]}
-
+            for ((j=0; j<${#CHANNEL[@]}; j++)); do
+                channelName=${CHANNEL[$i]}
+                channelID=${CHANNELID[$i]}
                 echo "process $chaincode tx on $cppath"
-                fname=$cname"-"$chaincode
+                fname=$channelName"-"$chaincode
                 echo "fname" $fname
                 cd $runDir
 
@@ -532,7 +530,7 @@ TransactionProc() {
                 fi
 
                 # create PTE transaction configuration input json
-                PreCFGProc $pteCfgTX $cppath $cname $chaincode $cid
+                PreCFGProc $pteCfgTX $cppath $channelName $chaincode $channelID
                 PreTXProc $pteTXopt $INVOKETYPE
 
                 runCaseTX=runCasesTX-$fname".txt"
@@ -550,8 +548,6 @@ TransactionProc() {
     ./pte_mgr.sh $PTEMgr
 
 }
-
-
 
 # GET CUSTOM OPTIONS
 echo -e "\nAny optional arguments chosen:\n"
@@ -826,19 +822,15 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-    # setup CHANNEL
-if [ $NCHAN -gt 0 ]; then
-    for (( i=$CHAN0; i < $NCHAN; i++ ))
-    do
-        CHANNEL[$i]=$CHANPREFIX$i
-    done
-fi
-
-    # setup CHANNEL
+    # setup CHANNEL & ChannelID
 if [ $NCHAN -gt 0 ]; then
     for (( i=0; i < $NCHAN; i++ ))
     do
-        CHANNELID[$i]=_ch$i
+        CHANNEL[$i]=$CHANPREFIX$CHAN0
+        # setup ChannelID to match CITest json files
+        # see an example https://github.com/hyperledger/fabric-test/blob/master/tools/PTE/CITest/FAB-12262-4q/marbles02/marbles02-chan1-FAB-12262-4q-TLS.json#L2
+        CHANNELID[$i]=_ch$CHAN0
+        CHAN0=$((CHAN0 + 1))
     done
 fi
 

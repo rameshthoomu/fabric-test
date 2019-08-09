@@ -3,6 +3,7 @@
     "TLS": "_TLS_",
     "channelOpt": {
         "name": "_CHANNELNAME_",
+        "channelID": "_CHANNELID_",
         "action":  "join",
         "orgName": [
         ]

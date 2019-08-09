@@ -3,6 +3,7 @@
     "TLS": "_TLS_",
     "channelOpt": {
         "name": "_CHANNELNAME_",
+        "channelid": "_CHANNELID_",
         "channelTX": "_CHANNELTXPATH_/_CHANNELNAME_.tx",
         "action":  "create",
         "orgName": [
