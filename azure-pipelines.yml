@@ -7,29 +7,62 @@ trigger:
 - release-1.*
 
 variables:
-  GOROOT: 'usr/bin/go'
-  GOPATH: '/home/ubuntu/azure/1/go'
-  PATH: '$(GOROOT)/bin:$(GOPATH)/bin:$(GOPATH)/binaries/bin:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin'
-  
-jobs:
-- job: VerifyBuild
-  pool:
-    vmImage: 'ubuntu-16.04'
-  steps:
-  - script: |
-      apt-get update
-      apt-get install libtool gcc make haveged python-minimal git -y
+  GOROOT: '/usr/local/bin/go'
+  GOPATH: '/home/vsts/work/1/go'
+  PATH: '$(GOROOT)/bin:$(GOPATH)/bin:$(GOPATH)/src/github.com/hyperledger/fabric-ca/build/bin:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin'
 
+stages:
+- stage: Build
+  jobs:
+  - job: Build
+    pool:
+      vmImage: 'ubuntu-16.04'
+    steps:
+    - script: |
+      sudo apt-get update
+      sudo apt-get install libtool gcc make haveged python-minimal git tox -y
       sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
       sudo chmod +x /usr/local/bin/docker-compose
-
       wget https://dl.google.com/go/go1.12.5.linux-amd64.tar.gz
       tar -xzf go1.12.5.linux-amd64.tar.gz
-      sudo mv go /usr/bin
+      sudo mv go /usr/local/bin
     displayName: Install Deps
-  - script: mkdir -p '$(GOPATH)/src/github.com/hyperledger'
-    displayName: Create Org Directory
-  - checkout: self
-    path: 'go/src/github.com/hyperledger/fabric-test'
-    displayName: Checkout Fabric Code
-  - script: make clean
+    - script: mkdir -p '$(GOPATH)/src/github.com/hyperledger'
+      displayName: Create Hyperledger Dir
+    - checkout: self
+      path: 'go/src/github.com/hyperledger/fabric-test'
+      displayName: Checkout Fabric Code
+    - script: make clean
+      displayName: Run Unit Test
+    
+# - stage: IntegrationTests
+#   dependsOn: []
+#   jobs:
+#   - job: RunIntegrationTests
+#     pool:
+#       vmImage: 'ubuntu-16.04'
+#     steps:
+#     - template: templates/ci_deps.yml
+#     - script: mkdir -p '$(GOPATH)/src/github.com/hyperledger'
+#       displayName: Create Hyperledger Dir
+#     - checkout: self
+#       path: 'go/src/github.com/hyperledger/fabric-ca'
+#       displayName: Checkout Fabric Code
+#     - script: make int-tests
+#       displayName: Run Unit Test
+    
+# - stage: FVTTests
+#   dependsOn: []
+#   jobs:
+#   - job: RunFVTTests
+#     pool:
+#       vmImage: 'ubuntu-16.04'
+#     steps:
+#     - template: templates/ci_deps.yml
+#     - script: mkdir -p '$(GOPATH)/src/github.com/hyperledger'
+#       displayName: Create Hyperledger Dir
+#     - checkout: self
+#       path: 'go/src/github.com/hyperledger/fabric-ca'
+#       displayName: Checkout Fabric Code
+#     - script: make fvt-tests
+#       displayName: Run Unit Test
