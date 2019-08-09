@@ -33,7 +33,7 @@ stages:
       path: 'go/src/github.com/hyperledger/fabric-test'
       displayName: Checkout Fabric Code
     - script: make clean
-      displayName: Run Unit Test
+      displayName: Run Unit Test 
     
 # - stage: IntegrationTests
 #   dependsOn: []
