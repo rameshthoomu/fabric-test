@@ -19,14 +19,14 @@ stages:
       vmImage: 'ubuntu-16.04'
     steps:
     - script: |
-      sudo apt-get update
-      sudo apt-get install libtool gcc make haveged python-minimal git tox -y
-      sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-      sudo chmod +x /usr/local/bin/docker-compose
-      wget https://dl.google.com/go/go1.12.5.linux-amd64.tar.gz
-      tar -xzf go1.12.5.linux-amd64.tar.gz
-      sudo mv go /usr/local/bin
-    displayName: Install Deps
+        sudo apt-get update
+        sudo apt-get install libtool gcc make haveged python-minimal git tox -y
+        sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        sudo chmod +x /usr/local/bin/docker-compose
+        wget https://dl.google.com/go/go1.12.5.linux-amd64.tar.gz
+        tar -xzf go1.12.5.linux-amd64.tar.gz
+        sudo mv go /usr/local/bin
+      displayName: Install Deps
     - script: mkdir -p '$(GOPATH)/src/github.com/hyperledger'
       displayName: Create Hyperledger Dir
     - checkout: self
