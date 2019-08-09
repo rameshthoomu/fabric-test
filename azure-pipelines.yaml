@@ -1,19 +1,33 @@
-pool:
-  vmImage: 'Ubuntu 16.04'
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+trigger:
+- master
+- release-1.*
 
 variables:
-  GOBIN:  '$(GOPATH)/bin' # Go binaries path
-  GOROOT: '/usr/local/go1.11' # Go installation path
-  GOPATH: '$(system.defaultWorkingDirectory)/gopath' # Go workspace path
-  modulePath: '$(GOPATH)/src/github.com/$(build.repository.name)' # Path to the module's code
+  GOROOT: 'usr/bin/go'
+  GOPATH: '/home/ubuntu/azure/1/go'
+  PATH: '$(GOROOT)/bin:$(GOPATH)/bin:$(GOPATH)/binaries/bin:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin'
+  
+jobs:
+- job: VerifyBuild
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+  - script: |
+      apt-get update
+      apt-get install libtool gcc make haveged python-minimal git -y
 
-steps:
-- script: |
-    mkdir -p '$(GOBIN)'
-    mkdir -p '$(GOPATH)/pkg'
-    mkdir -p '$(modulePath)'
-    shopt -s extglob
-    mv !(gopath) '$(modulePath)'
-    echo '##vso[task.prependpath]$(GOBIN)'
-    echo '##vso[task.prependpath]$(GOROOT)/bin'
-  displayName: 'Set up the Go workspace'
+      sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+      sudo chmod +x /usr/local/bin/docker-compose
+
+      wget https://dl.google.com/go/go1.12.5.linux-amd64.tar.gz
+      tar -xzf go1.12.5.linux-amd64.tar.gz
+      sudo mv go /usr/bin
+  - script: mkdir -p '$(GOPATH)/src/github.com/hyperledger'
+  - checkout: self
+    path: 'go/src/github.com/hyperledger/fabric-test'
+    displayName: Checkout Fabric Code
+  - script: make clean
