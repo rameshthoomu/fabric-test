@@ -7,7 +7,7 @@ name: $(SourceBranchName)-$(Date:yyyyMMdd)$(Rev:.rrr)
 
 schedules:
 # 3 AM UTC/10 PM EST
-  - cron: "31 4 * * *"
+  - cron: "31 16 * * *"
     displayName: 'PTE Daily Job'
     branches:
       include:
