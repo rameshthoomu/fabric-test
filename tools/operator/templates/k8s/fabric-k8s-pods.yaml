@@ -62,7 +62,7 @@
 #@ def caContainers(input, orgName, config):
 #@   ca_image = "hyperledger/fabric-ca:{}".format(config.fabricVersion)
 #@   if config.fabricVersion.endswith("-stable"):
-#@     ca_image="hyperledger-fabric.jfrog.io/hyperledger/fabric-ca:amd64-{}".format(config.fabricVersion)
+#@     ca_image="hyperledger-fabric.jfrog.io/fabric-ca:amd64-{}".format(config.fabricVersion)
 #@   end
 #@   env = [{"name": "FABRIC_CA_HOME", "value": "/etc/hyperledger/fabric-ca-server"}]
 #@   env.append({"name": "FABRIC_CA_SERVER_CA_NAME", "value": "{}".format(input)})
