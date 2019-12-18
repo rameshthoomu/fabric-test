@@ -13,9 +13,9 @@
 #@   resources = {"limits": {"cpu": "0.2", "memory": "0.4Gi"}, "requests": {"cpu": "0.1", "memory": "0.2Gi"}}
 #@   output = []
 #@   if config.k8s.dataPersistence == True:
-#@     output = [{"volumeMounts": [{"mountPath": "/data", "name": "zookeeper-data-storage"}], "name": input, "image": "hyperledger/fabric-zookeeper", "imagePullPolicy": "Always", "env": env, "resources": resources}]
+#@     output = [{"volumeMounts": [{"mountPath": "/data", "name": "zookeeper-data-storage"}], "name": input, "image": "rameshthoomu/fabric-zookeeper:0.4.19", "imagePullPolicy": "Always", "env": env, "resources": resources}]
 #@   else:
-#@     output = [{"name": input, "image": "hyperledger/fabric-zookeeper", "imagePullPolicy": "Always", "env": env, "resources": resources}]
+#@     output = [{"name": input, "image": "rameshthoomu/fabric-zookeeper:0.4.19", "imagePullPolicy": "Always", "env": env, "resources": resources}]
 #@   end
 #@   return output
 #@ end
@@ -34,9 +34,9 @@
 #@   resources = config.k8s.resources.kafka
 #@   output = []
 #@   if config.k8s.dataPersistence == True:
-#@     output = [{"volumeMounts": [{"mountPath": "/opt/kafka/data", "name": "kafka-data-storage"}], "name": input, "image": "hyperledger/fabric-kafka", "imagePullPolicy": "Always", "env": env, "resources": resources}]
+#@     output = [{"volumeMounts": [{"mountPath": "/opt/kafka/data", "name": "kafka-data-storage"}], "name": input, "image": "rameshthoomu/fabric-kafka:0.4.19", "imagePullPolicy": "Always", "env": env, "resources": resources}]
 #@   else:
-#@     output = [{"name": input, "image": "hyperledger/fabric-kafka", "imagePullPolicy": "Always", "env": env, "resources": resources}]
+#@     output = [{"name": input, "image": "rameshthoomu/fabric-kafka:0.4.19", "imagePullPolicy": "Always", "env": env, "resources": resources}]
 #@   end
 #@   return output
 #@ end
@@ -172,9 +172,9 @@
 #@     env.append({"name": "CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS", "value": "localhost:5984"})
 #@     if config.k8s.dataPersistence == True or config.k8s.dataPersistence == "local":
 #@       couchdbMount = [{"mountPath": "/opt/couchdb/data", "name": "couchdb-data-storage"}]
-#@       container = {"name": "couchdb-{}".format(input), "image": "hyperledger/fabric-couchdb", "imagePullPolicy": "Always", "resources": config.k8s.resources.couchdb, "volumeMounts": couchdbMount}
+#@       container = {"name": "couchdb-{}".format(input), "image": "rameshthoomu/fabric-couchdb:0.4.19", "imagePullPolicy": "Always", "resources": config.k8s.resources.couchdb, "volumeMounts": couchdbMount}
 #@     else:
-#@       container = {"name": "couchdb-{}".format(input), "image": "hyperledger/fabric-couchdb", "imagePullPolicy": "Always", "resources": config.k8s.resources.couchdb}
+#@       container = {"name": "couchdb-{}".format(input), "image": "rameshthoomu/fabric-couchdb:0.4.19", "imagePullPolicy": "Always", "resources": config.k8s.resources.couchdb}
 #@     end
 #@     output = [{"name": "dind", "image": "docker:dind", "args": ["dockerd", "-H tcp://0.0.0.0:2375"], "securityContext": {"privileged": True}, "resources": dindResources}, {"name": input, "image": peer_image, "imagePullPolicy": "Always", "env": env, "volumeMounts": volumeMounts, "command": ["peer"], "args": ["node", "start"], "resources": resources}, container]
 #@   else:
