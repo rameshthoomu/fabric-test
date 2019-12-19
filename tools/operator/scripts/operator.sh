@@ -120,14 +120,14 @@ samplecc_go_2chan() {
   cd "$PTEDir"/CITest/scripts || exit 1
   echo "-------> Execute Invoke"
   export hfc_logging='{"debug":"console"}'
-  ./gen_cfgInputs.sh -d "$ConnProfile" --nchan 2 --chan0 0 --norg 2 --chanprefix testorgschannel --chantxpath "$Chantxpath" --tls "$1" --payloadmin 0 --payloadmax 1024 -a sample_cc --freq 100 --nreq 1000 --nproc 2 --targetpeers ORGANCHOR -t move > "$LogsDir"/"$2"_samplecc_go_2chan_i.log
+  ./gen_cfgInputs.sh -d "$ConnProfile" --nchan 2 --chan0 0 --norg 2 --chanprefix testorgschannel --chantxpath "$Chantxpath" --tls "$1" --payloadmin 0 --payloadmax 1024 -a sample_cc --freq 100 --nreq 100 --nproc 2 --targetpeers ORGANCHOR -t move > "$LogsDir"/"$2"_samplecc_go_2chan_i.log
   sleep 30
   cp -r "$PTEDir"/pteReport.txt "$LogsDir"/samplecc_go_2chan_i_pteReport.txt
   node get_pteReport.js "$LogsDir"/samplecc_go_2chan_i_pteReport.txt
   rm -f "$PTEDir"/pteReport.txt
   echo "-------> Execute Query"
   export hfc_logging='{"debug":"console"}'
-  ./gen_cfgInputs.sh -d "$ConnProfile" --nchan 2 --chan0 0 --norg 2 --chanprefix testorgschannel --chantxpath "$Chantxpath" --tls "$1" -a sample_cc --freq 100 --nreq 1000  --nproc 2 --targetpeers ORGANCHOR -t query > "$LogsDir"/"$2"_samplecc_go_2chan_q.log
+  ./gen_cfgInputs.sh -d "$ConnProfile" --nchan 2 --chan0 0 --norg 2 --chanprefix testorgschannel --chantxpath "$Chantxpath" --tls "$1" -a sample_cc --freq 100 --nreq 100  --nproc 2 --targetpeers ORGANCHOR -t query > "$LogsDir"/"$2"_samplecc_go_2chan_q.log
   sleep 30
   cp -r "$PTEDir"/pteReport.txt "$LogsDir"/samplecc_go_2chan_q_pteReport.txt
   # Convert Test Report into Aggregate summary
@@ -140,7 +140,7 @@ samplecc_go_2chan() {
 samplejs_node_2chan() {
   cd "$PTEDir"/CITest/scripts || exit 1
   echo "-------> Execute Invoke"
-  ./gen_cfgInputs.sh -d "$ConnProfile" --nchan 2 --chan0 0 --norg 2 --chantxpath "$Chantxpath" --chanprefix testorgschannel --tls "$1" --payloadmin 1024 --payloadmax 10240 -a sample_js --freq 100 --nreq 1000 --nproc 2 --targetpeers ORGANCHOR -t move > "$LogsDir"/"$2"_samplejs_node_2chan_i.log
+  ./gen_cfgInputs.sh -d "$ConnProfile" --nchan 2 --chan0 0 --norg 2 --chantxpath "$Chantxpath" --chanprefix testorgschannel --tls "$1" --payloadmin 1024 --payloadmax 10240 -a sample_js --freq 100 --nreq 100 --nproc 2 --targetpeers ORGANCHOR -t move > "$LogsDir"/"$2"_samplejs_node_2chan_i.log
     cp -r "$PTEDir"/pteReport.txt "$LogsDir"/samplejs_node_2chan_i_pteReport.txt
   # Convert Test Report into Aggregate summary
   node get_pteReport.js "$LogsDir"/samplejs_node_2chan_i_pteReport.txt
@@ -148,7 +148,7 @@ samplejs_node_2chan() {
   rm -f "$PTEDir"/pteReport.txt
   sleep 30
   echo "-------> Execute Query"
-  ./gen_cfgInputs.sh -d "$ConnProfile" --nchan 2 --chan0 0 --norg 2 --chantxpath "$Chantxpath" --chanprefix testorgschannel --tls "$1" -a sample_js --freq 100 --nreq 1000  --nproc 2 --targetpeers ORGANCHOR -t query > "$LogsDir"/"$2"_samplejs_node_2chan_q.log
+  ./gen_cfgInputs.sh -d "$ConnProfile" --nchan 2 --chan0 0 --norg 2 --chantxpath "$Chantxpath" --chanprefix testorgschannel --tls "$1" -a sample_js --freq 100 --nreq 100  --nproc 2 --targetpeers ORGANCHOR -t query > "$LogsDir"/"$2"_samplejs_node_2chan_q.log
   cp -r "$PTEDir"/pteReport.txt "$LogsDir"/samplejs_node_2chan_q_pteReport.txt
   # Convert Test Report into Aggregate summary
   node get_pteReport.js "$LogsDir"/samplejs_node_2chan_q_pteReport.txt
@@ -195,7 +195,7 @@ samplecc_go_12hr() {
 samplecc_go_8MB_TX() {
   cd "$PTEDir"/CITest/scripts || exit 1
   echo "-------> Execute Invoke"
-  ./gen_cfgInputs.sh -d "$ConnProfile" --nchan 2 --chan0 0 --norg 2 --chanprefix testorgschannel --chantxpath "$Chantxpath" --tls "$1" --payloadmin 4194304 --payloadmax 4194304 -a sample_cc --freq 1000 --nreq 10 --nproc 1 --targetpeers ORGANCHOR -t move > "$LogsDir"/"$2"_samplecc_go_8MB_i.log
+  ./gen_cfgInputs.sh -d "$ConnProfile" --nchan 2 --chan0 0 --norg 2 --chanprefix testorgschannel --chantxpath "$Chantxpath" --tls "$1" --payloadmin 4194304 --payloadmax 4194304 -a sample_cc --freq 100 --nreq 10 --nproc 1 --targetpeers ORGANCHOR -t move > "$LogsDir"/"$2"_samplecc_go_8MB_i.log
   sleep 30
   cp -r "$PTEDir"/pteReport.txt "$LogsDir"/samplecc_go_8MB_i_pteReport.txt
   # Convert Test Report into Aggregate summary
