@@ -76,7 +76,7 @@ ordererCapabilities:
   V1_4_2: true
 
 channelCapabilities:
-  V1_4_3: true
+  V1_4_2: true
 
 applicationCapabilities:
   V1_4_2: true
