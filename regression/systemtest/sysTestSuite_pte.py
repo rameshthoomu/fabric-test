@@ -218,9 +218,3 @@ class System_Tests_Kafka_Leveldb_NOTLS(unittest.TestCase):
                 "grep \"CONSTANT INVOKE Overall transactions: sent 2 received 2\" samplecc_go_50MB_i_pteReport.txt | wc -l",
                 cwd=logs_directory, shell=True)
         self.assertEqual(int(count.strip()), 1, msg=invokeFailure)
-
-    def test_09downNetwork(self):
-
-        # Teardown the network
-        returncode = subprocess.call("./operator.sh -a down -f ../testdata/kafka-leveldb-notls-network-spec.yml", cwd=k8s_testsuite, shell=True)
-        self.assertEqual(returncode, 0, msg=testScriptFailed)
