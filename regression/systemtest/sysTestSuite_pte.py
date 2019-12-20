@@ -49,12 +49,12 @@ class System_Tests_Kafka_Couchdb_TLS(unittest.TestCase):
 
         # check the counts
         count = subprocess.check_output(
-                "grep \"CONSTANT INVOKE Overall transactions: sent 400 received 400\" samplecc_go_2chan_i_pteReport.txt | wc -l",
+                "grep \"CONSTANT INVOKE Overall transactions: sent 800 received 800\" samplecc_go_2chan_i_pteReport.txt | wc -l",
                 cwd=logs_directory, shell=True)
         self.assertEqual(int(count.strip()), 1, msg=invokeFailure)
 
         count = subprocess.check_output(
-                "grep \"CONSTANT QUERY Overall transactions: sent 400 received 400 failures 0\" samplecc_go_2chan_q_pteReport.txt | wc -l",
+                "grep \"CONSTANT QUERY Overall transactions: sent 800 received 800 failures 0\" samplecc_go_2chan_q_pteReport.txt | wc -l",
                 cwd=logs_directory, shell=True)
         self.assertEqual(int(count.strip()), 1, msg=queryCountFailure)
 
@@ -66,12 +66,12 @@ class System_Tests_Kafka_Couchdb_TLS(unittest.TestCase):
 
         # check the counts
         count = subprocess.check_output(
-                "grep \"CONSTANT INVOKE Overall transactions: sent 400 received 400\" samplejs_node_2chan_i_pteReport.txt | wc -l",
+                "grep \"CONSTANT INVOKE Overall transactions: sent 800 received 800\" samplejs_node_2chan_i_pteReport.txt | wc -l",
                 cwd=logs_directory, shell=True)
         self.assertEqual(int(count.strip()), 1, msg=invokeFailure)
 
         count = subprocess.check_output(
-                "grep \"CONSTANT QUERY Overall transactions: sent 400 received 400 failures 0\" samplejs_node_2chan_q_pteReport.txt | wc -l",
+                "grep \"CONSTANT QUERY Overall transactions: sent 800 received 800 failures 0\" samplejs_node_2chan_q_pteReport.txt | wc -l",
                 cwd=logs_directory, shell=True)
         self.assertEqual(int(count.strip()), 1, msg=queryCountFailure)
 
@@ -83,7 +83,7 @@ class System_Tests_Kafka_Couchdb_TLS(unittest.TestCase):
 
         # check the counts
         count = subprocess.check_output(
-                "grep \"CONSTANT INVOKE Overall transactions: sent 400 received 400\" sbecc_go_2chan_endorse_i_pteReport.txt | wc -l",
+                "grep \"CONSTANT INVOKE Overall transactions: sent 8000 received 8000\" sbecc_go_2chan_endorse_i_pteReport.txt | wc -l",
                 cwd=logs_directory, shell=True)
         self.assertEqual(int(count.strip()), 1, msg=invokeFailure)
 
@@ -122,12 +122,12 @@ class System_Tests_Kafka_Couchdb_TLS(unittest.TestCase):
 
         # check the counts
         count = subprocess.check_output(
-                "grep \"CONSTANT INVOKE Overall transactions: sent 400 received 400\" samplecc_go_2chan_i_pteReport.txt | wc -l",
+                "grep \"CONSTANT INVOKE Overall transactions: sent 800 received 800\" samplecc_go_2chan_i_pteReport.txt | wc -l",
                 cwd=logs_directory, shell=True)
         self.assertEqual(int(count.strip()), 1, msg=invokeFailure)
 
         count = subprocess.check_output(
-                "grep \"CONSTANT QUERY Overall transactions: sent 400 received 400 failures 0\" samplecc_go_2chan_q_pteReport.txt | wc -l",
+                "grep \"CONSTANT QUERY Overall transactions: sent 800 received 800 failures 0\" samplecc_go_2chan_q_pteReport.txt | wc -l",
                 cwd=logs_directory, shell=True)
         self.assertEqual(int(count.strip()), 1, msg=queryCountFailure)
 
@@ -169,12 +169,12 @@ class System_Tests_Kafka_Leveldb_NOTLS(unittest.TestCase):
 
         # check the counts
         count = subprocess.check_output(
-                "grep \"CONSTANT INVOKE Overall transactions: sent 400 received 400\" samplecc_go_2chan_i_pteReport.txt | wc -l",
+                "grep \"CONSTANT INVOKE Overall transactions: sent 800 received 800\" samplecc_go_2chan_i_pteReport.txt | wc -l",
                 cwd=logs_directory, shell=True)
         self.assertEqual(int(count.strip()), 1, msg=invokeFailure)
 
         count = subprocess.check_output(
-                "grep \"CONSTANT QUERY Overall transactions: sent 400 received 400 failures 0\" samplecc_go_2chan_q_pteReport.txt | wc -l",
+                "grep \"CONSTANT QUERY Overall transactions: sent 800 received 800 failures 0\" samplecc_go_2chan_q_pteReport.txt | wc -l",
                 cwd=logs_directory, shell=True)
         self.assertEqual(int(count.strip()), 1, msg=queryCountFailure)
 
@@ -186,12 +186,12 @@ class System_Tests_Kafka_Leveldb_NOTLS(unittest.TestCase):
 
         # check the counts
         count = subprocess.check_output(
-                "grep \"CONSTANT INVOKE Overall transactions: sent 400 received 400\" samplejs_node_2chan_i_pteReport.txt | wc -l",
+                "grep \"CONSTANT INVOKE Overall transactions: sent 800 received 800\" samplejs_node_2chan_i_pteReport.txt | wc -l",
                 cwd=logs_directory, shell=True)
         self.assertEqual(int(count.strip()), 1, msg=invokeFailure)
 
         count = subprocess.check_output(
-                "grep \"CONSTANT QUERY Overall transactions: sent 400 received 400 failures 0\" samplejs_node_2chan_q_pteReport.txt | wc -l",
+                "grep \"CONSTANT QUERY Overall transactions: sent 800 received 800 failures 0\" samplejs_node_2chan_q_pteReport.txt | wc -l",
                 cwd=logs_directory, shell=True)
         self.assertEqual(int(count.strip()), 1, msg=queryCountFailure)
 
