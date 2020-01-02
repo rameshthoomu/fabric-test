@@ -118,6 +118,7 @@
 
 #@ def orderers(config):
 #@   (ordererUniquerPort, ordererHealthCheckPort) = (30000, 30100)
+#@   env.append({"name": "ORDERER_KAFKA_VERSION", "value": "{}".format(config.kafkaVersion)})
 #@   for i in range(0, len(config.ordererOrganizations)):
 #@     org = config.ordererOrganizations[i]
 #@     for j in range(0, org.numOderers):

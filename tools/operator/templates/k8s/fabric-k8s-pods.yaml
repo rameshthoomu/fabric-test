@@ -34,9 +34,9 @@
 #@   resources = config.k8s.resources.kafka
 #@   output = []
 #@   if config.k8s.dataPersistence == True:
-#@     output = [{"volumeMounts": [{"mountPath": "/opt/kafka/data", "name": "kafka-data-storage"}], "name": input, "image": "rameshthoomu/fabric-kafka:0.4.19", "imagePullPolicy": "Always", "env": env, "resources": resources}]
+#@     output = [{"volumeMounts": [{"mountPath": "/opt/kafka/data", "name": "kafka-data-storage"}], "name": input, "image": "rameshthoomu/fabric-kafka", "imagePullPolicy": "Always", "env": env, "resources": resources}]
 #@   else:
-#@     output = [{"name": input, "image": "rameshthoomu/fabric-kafka:0.4.19", "imagePullPolicy": "Always", "env": env, "resources": resources}]
+#@     output = [{"name": input, "image": "rameshthoomu/fabric-kafka", "imagePullPolicy": "Always", "env": env, "resources": resources}]
 #@   end
 #@   return output
 #@ end
@@ -188,7 +188,7 @@
 #@   env = [{"name": "ORDERER_GENERAL_LISTENADDRESS", "value": "0.0.0.0"}]
 #@   env.append({"name": "ORDERER_GENERAL_LISTENPORT", "value": "{}".format(ordererUniquePort)})
 #@   env.append({"name": "ORDERER_GENERAL_GENESISMETHOD", "value": "file"})
-#@   env.append({"name": "ORDERER_KAFKA_VERSION", "value": "1.1.1"})
+#@   env.append({"name": "ORDERER_KAFKA_VERSION", "value": "{}".format(config.kafkaVersion)})
 #@   env.append({"name": "FABRIC_LOGGING_SPEC", "value": config.ordererFabricLoggingSpec})
 #@   if config.tls == "mutual":
 #@     env.append({"name": "ORDERER_GENERAL_TLS_CLIENTROOTCAS", "value": "[{}]".format(", ".join(mutualTLS(config, "clientrootca"))) })

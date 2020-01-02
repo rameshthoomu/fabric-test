@@ -23,6 +23,9 @@ gossipEnable: false
 #! enable node ou's in fabric network (true/false)
 enableNodeOUs: false
 
+#! Provide kafka version
+kafkaVersion: 2.2.2
+
 #! Location where crypto-config, connection-profiles, channel-artifacts are stored
 artifactsLocation: /home/jenkins/gopath/src/github.com/hyperledger/fabric-test/fabric/internal/cryptogen/
 
